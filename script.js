@@ -8,34 +8,37 @@ const gameBoardModule = (function () {
   // }
 
   let board = [];
+  const fields = document.querySelectorAll(".board-box");
+
+  const populateBoard = () => {
+    fields.forEach((field) => {
+      field.addEventListener("click", (e) => {
+        console.log(e.target);
+        playerX.setPlayerMarker(field);
+      });
+    });
+  };
 
   return {
-    board: board,
+    board,
+    populateBoard,
   };
 })();
 
-// const Player = (name, choice) => {
-//     const getName = () => name
-//     const getChoice = () => choice
+const Player = (name, side) => {
+  const getName = () => name;
+  let playerSide = side;
 
-// return {getName, getChoice}
-// }
+  function setPlayerMarker(square) {
+    if(square.innerHTML) {
+      alert("Field is already taken, choose another one!")
+    }
+    square.innerHTML = playerSide;
+  }
 
-const fields = document.querySelectorAll(".board-box");
-
-const populateBoard = () => {
-  let currentMark = "X";
-  fields.forEach((field) => {
-    field.addEventListener("click", (e) => {
-      if (field.innerHTML) {
-        field.innerHTML = "O";
-        currentMark = "X";
-      } else {
-        field.innerHTML = currentMark;
-        currentMark = "O"
-      }
-    });
-  });
+  return { name, setPlayerMarker };
 };
 
-populateBoard();
+const playerX = Player("test", "X");
+gameBoardModule.populateBoard();
+
