@@ -30,32 +30,35 @@ const Player = (name, side) => {
     square.innerText = playerSide;
   }
 
-  return { name, setPlayerMarker };
+  return { name, setPlayerMarker, playerSide };
 };
 
 //Functions
 
 const submitForm = () => {
   const playerName = document.getElementById("player-name").value;
-  const playerMarker = document.getElementById("player-marker").value;
+  const playerMarker = document.querySelector(".player-marker").value;
   const form = document.querySelector(".player-form");
   const submitBtn = document.querySelector(".submit-btn")
-  console.log(playerName);
-  console.log(playerMarker);
 
-  // Check if player is created first time
+  // Check if player is created first time and remove side option after it was taken
   if(player1 == null) {
     player1 = Player(playerName, playerMarker)
+    document.getElementById(playerMarker).remove();
   } else {
     player2 = Player(playerName, playerMarker)
   }
 
-  // Disable player creaton if two players already exist
+  // Disable player creation if two players already exist
   if(player1 && player2 != null) {
     submitBtn.disabled = true
   }
 
   form.reset();
 };
+
+
+
+
 
 

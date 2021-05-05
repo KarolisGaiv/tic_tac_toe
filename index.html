@@ -26,7 +26,11 @@
         <h2>Create Player</h2>
         <form class="player-form">
           <input type="text" placeholder="Enter Player Name" class="input-field" id="player-name" required/>
-          <input type="text" placeholder="X's or O's?" class="input-field" id="player-marker" required/>
+          <label for="player-marker">Choose your side</label>
+          <select class="player-marker" >
+            <option value="X" id="X">X</option>
+            <option value="Y" id="Y">Y</option>
+          </select>
           <button class="submit-btn" type="button" onclick="submitForm()">Submit</button>
         </form>
       </div>
