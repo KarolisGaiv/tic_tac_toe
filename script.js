@@ -40,6 +40,7 @@ const Player = (name, side) => {
   function setPlayerMarker(square) {
     if (square.innerText) {
       alert("Field is already taken, choose another one!");
+      return false;
     }
     square.innerText = playerSide;
   }
@@ -62,7 +63,7 @@ const submitForm = () => {
     getCurrentPlayer(player1);
   } else {
     player2 = Player(playerName, playerMarker);
-    currentPlayer = player2;
+    getCurrentPlayer(player2);
   }
 
   // Disable player creation if two players already exist
