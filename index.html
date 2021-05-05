@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
-</head>
-<body>
-    <div class="board-wrapper">
+  </head>
+  <body>
+    <div class="body-wrapper">
+      <div class="board-wrapper">
         <div class="board">
-            <div class="board-box" id="square-1"></div>
-            <div class="board-box" id="square-2"></div>
-            <div class="board-box" id="square-3"></div>
-            <div class="board-box" id="square-4"></div>
-            <div class="board-box" id="square-5"></div>
-            <div class="board-box" id="square-6"></div>
-            <div class="board-box" id="square-7"></div>
-            <div class="board-box" id="square-8"></div>
-            <div class="board-box" id="square-9"></div>
+          <div class="board-box" id="square-1"></div>
+          <div class="board-box" id="square-2"></div>
+          <div class="board-box" id="square-3"></div>
+          <div class="board-box" id="square-4"></div>
+          <div class="board-box" id="square-5"></div>
+          <div class="board-box" id="square-6"></div>
+          <div class="board-box" id="square-7"></div>
+          <div class="board-box" id="square-8"></div>
+          <div class="board-box" id="square-9"></div>
         </div>
+      </div>
+      <div class="player-wrapper">
+        <h2>Create Player</h2>
+        <form class="player-form">
+          <input type="text" placeholder="Enter Player Name" class="input-field" id="player-name" required/>
+          <input type="text" placeholder="X's or O's?" class="input-field" id="player-marker" required/>
+          <button class="submit-btn" type="button" onclick="submitForm()">Submit</button>
+        </form>
+      </div>
     </div>
 
-
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

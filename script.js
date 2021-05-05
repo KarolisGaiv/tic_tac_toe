@@ -1,44 +1,61 @@
-const gameBoardModule = (function () {
-  // const name = "test"
-  // function _privateMethod() {
-  //     console.log(name);
-  // }
-  // function publicMethod() {
-  //     _privateMethod()
-  // }
+// Global variables
+let player1;
+let player2;
 
-  let board = [];
+const gameBoardModule = (function () {
   const fields = document.querySelectorAll(".board-box");
 
-  const populateBoard = () => {
+  const populateBoard = (() => {
     fields.forEach((field) => {
-      field.addEventListener("click", (e) => {
-        console.log(e.target);
-        playerX.setPlayerMarker(field);
+      field.addEventListener("click", () => {
+        player1.setPlayerMarker(field);
       });
     });
-  };
+  })();
 
-  return {
-    board,
-    populateBoard,
-  };
+  return {};
 })();
+
+// const gameController = (function () {
+// })();
 
 const Player = (name, side) => {
   const getName = () => name;
   let playerSide = side;
 
   function setPlayerMarker(square) {
-    if(square.innerHTML) {
-      alert("Field is already taken, choose another one!")
+    if (square.innerText) {
+      alert("Field is already taken, choose another one!");
     }
-    square.innerHTML = playerSide;
+    square.innerText = playerSide;
   }
 
   return { name, setPlayerMarker };
 };
 
-const playerX = Player("test", "X");
-gameBoardModule.populateBoard();
+//Functions
+
+const submitForm = () => {
+  const playerName = document.getElementById("player-name").value;
+  const playerMarker = document.getElementById("player-marker").value;
+  const form = document.querySelector(".player-form");
+  const submitBtn = document.querySelector(".submit-btn")
+  console.log(playerName);
+  console.log(playerMarker);
+
+  // Check if player is created first time
+  if(player1 == null) {
+    player1 = Player(playerName, playerMarker)
+  } else {
+    player2 = Player(playerName, playerMarker)
+  }
+
+  // Disable player creaton if two players already exist
+  if(player1 && player2 != null) {
+    submitBtn.disabled = true
+  }
+
+  form.reset();
+};
+
 
