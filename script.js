@@ -109,6 +109,11 @@ const submitForm = () => {
   const form = document.querySelector(".player-form");
   const submitBtn = document.querySelector(".submit-btn");
 
+  if (!playerName) {
+    alert("Please enter player name");
+    return;
+  }
+
   // Check if player is created first time and remove marker option after it was taken
   if (player1 == null) {
     player1 = Player(playerName, playerMarker);
@@ -119,9 +124,9 @@ const submitForm = () => {
     getCurrentPlayer(player2);
   }
 
-  // Disable player creation if two players already exist
+  // Remove player creation form after both players are created
   if (player1 && player2 != null) {
-    submitBtn.disabled = true;
+    document.querySelector(".player-wrapper").remove()
   }
 
   form.reset();
