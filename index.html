@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
   </head>
   <body>
+    <header class="header"><h1>Tic Tac Toe!</h1></header>
     <div class="body-wrapper">
       <div class="board-wrapper">
         <div class="board">
@@ -25,13 +31,21 @@
       <div class="player-wrapper">
         <h2>Create Player</h2>
         <form class="player-form">
-          <input type="text" placeholder="Enter Player Name" class="input-field" id="player-name" required/>
+          <input
+            type="text"
+            placeholder="Enter Player Name"
+            class="input-field"
+            id="player-name"
+            required
+          />
           <label for="player-marker">Choose your side</label>
-          <select class="player-marker" >
+          <select class="player-marker">
             <option value="X" id="X">Dark Side - X</option>
             <option value="Y" id="Y">Light Side - Y</option>
           </select>
-          <button class="submit-btn" type="button" onclick="submitForm()">Submit</button>
+          <button class="submit-btn" type="button" onclick="submitForm()">
+            Submit
+          </button>
         </form>
       </div>
     </div>
