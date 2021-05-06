@@ -6,6 +6,18 @@ let currentPlayer;
 const gameBoardModule = (function () {
   const fields = document.querySelectorAll(".board-box");
   let counter = 0;
+  let gameWin = false;
+
+  const winningPositions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
   const changePlayerTurn = () => {
     if (currentPlayer == player1) {
@@ -15,15 +27,37 @@ const gameBoardModule = (function () {
     }
   };
 
-  const checkResult = (turnCount) => {
+  const checkResult = (turnCount, currentPlayer) => {
     if (turnCount > 8) {
       alert("It's a TIE!");
       return;
     }
+
+    checkPlayerTurns(currentPlayer.playerArray);
+  };
+
+  const checkPlayerTurns = (playerArray) => {
+    winningPositions.forEach((winningCombo) => {
+      if (compareArrays(playerArray, winningCombo)) {
+        gameWin = true;
+        console.log(`Congratz ${currentPlayer.name} for winning`);
+      }
+    });
+  };
+
+  const compareArrays = (arr1, arr2) => {
+    let signal = true;
+    arr2.forEach((el) => {
+      if (!arr1.includes(el)) {
+        signal = false;
+      }
+    });
+    return signal;
   };
 
   const populateBoard = (() => {
     fields.forEach((field) => {
+      // const squareNumber = parseInt(field.id)
       field.addEventListener("click", () => {
         // Check if both players exist before setting player marker
         if (player1 && player2 != null) {
@@ -34,7 +68,10 @@ const gameBoardModule = (function () {
           }
           currentPlayer.setPlayerMarker(field);
           counter++;
-          checkResult(counter)
+          // Start checking for winner only when one player has already made at least 2 moves
+          if (counter > 4) {
+            checkResult(counter, currentPlayer);
+          }
           changePlayerTurn();
         } else {
           alert("You need two players to play this game :)");
@@ -49,14 +86,19 @@ const gameBoardModule = (function () {
 const Player = (name, side) => {
   const cardName = document.querySelector(".card-name");
   const cardMarker = document.querySelector(".card-marker");
-  const getName = () => name;
   let playerSide = side;
+  let playerArray = [];
 
   function setPlayerMarker(square) {
     square.innerText = playerSide;
+    saveTurn(square);
   }
 
-  return { name, setPlayerMarker, playerSide };
+  const saveTurn = (field) => {
+    playerArray.push(parseInt(field.id));
+  };
+
+  return { name, setPlayerMarker, playerSide, playerArray };
 };
 
 //Functions
