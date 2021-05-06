@@ -41,6 +41,7 @@ const gameBoardModule = (function () {
       if (compareArrays(playerArray, winningCombo)) {
         gameWin = true;
         console.log(`Congratz ${currentPlayer.name} for winning`);
+        markWinningSquares(winningCombo);
       }
     });
   };
@@ -53,6 +54,17 @@ const gameBoardModule = (function () {
       }
     });
     return signal;
+  };
+
+  const markWinningSquares = (winningArray) => {
+    winningArray.forEach((element) => {
+      let squareToHiglight = document.getElementById(element);
+      if (currentPlayer.playerSide == "X") {
+        squareToHiglight.classList.add("dark-side");
+      } else {
+        squareToHiglight.classList.add("light-side");
+      }
+    });
   };
 
   const populateBoard = (() => {
@@ -126,7 +138,7 @@ const submitForm = () => {
 
   // Remove player creation form after both players are created
   if (player1 && player2 != null) {
-    document.querySelector(".player-wrapper").remove()
+    document.querySelector(".player-wrapper").remove();
   }
 
   form.reset();
