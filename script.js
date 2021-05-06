@@ -15,17 +15,26 @@ const gameBoardModule = (function () {
     }
   };
 
+  const checkResult = (turnCount) => {
+    if (turnCount > 8) {
+      alert("It's a TIE!");
+      return;
+    }
+  };
+
   const populateBoard = (() => {
     fields.forEach((field) => {
       field.addEventListener("click", () => {
         // Check if both players exist before setting player marker
         if (player1 && player2 != null) {
+          // Check if square is not taken
           if (field.innerText) {
             alert("Field is already taken, choose another one");
-            return; 
+            return;
           }
           currentPlayer.setPlayerMarker(field);
           counter++;
+          checkResult(counter)
           changePlayerTurn();
         } else {
           alert("You need two players to play this game :)");
@@ -34,7 +43,7 @@ const gameBoardModule = (function () {
     });
   })();
 
-  return { counter };
+  return {};
 })();
 
 const Player = (name, side) => {
@@ -81,4 +90,3 @@ const getCurrentPlayer = (player) => {
     currentPlayer = player;
   }
 };
-
