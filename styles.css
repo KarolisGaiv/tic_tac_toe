@@ -35,3 +35,13 @@
 .submit-btn {
     margin: 5px;
 }
+
+.card-wrapper {
+    margin: 20px;
+}
+
+.player-card {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 200px;
+}

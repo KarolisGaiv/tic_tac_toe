@@ -20,9 +20,13 @@ const gameBoardModule = (function () {
       field.addEventListener("click", () => {
         // Check if both players exist before setting player marker
         if (player1 && player2 != null) {
+          if (field.innerText) {
+            alert("Field is already taken, choose another one");
+            return; 
+          }
           currentPlayer.setPlayerMarker(field);
           counter++;
-          changePlayerTurn()
+          changePlayerTurn();
         } else {
           alert("You need two players to play this game :)");
         }
@@ -34,14 +38,12 @@ const gameBoardModule = (function () {
 })();
 
 const Player = (name, side) => {
+  const cardName = document.querySelector(".card-name");
+  const cardMarker = document.querySelector(".card-marker");
   const getName = () => name;
   let playerSide = side;
 
   function setPlayerMarker(square) {
-    if (square.innerText) {
-      alert("Field is already taken, choose another one!");
-      return false;
-    }
     square.innerText = playerSide;
   }
 
@@ -80,5 +82,3 @@ const getCurrentPlayer = (player) => {
   }
 };
 
-// 1. Get current player
-// 2. Change current player after each turn
