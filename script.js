@@ -6,7 +6,6 @@ let currentPlayer;
 const gameBoardModule = (function () {
   const fields = document.querySelectorAll(".board-box");
   let counter = 0;
-  let gameWin = false;
 
   const winningPositions = [
     [0, 1, 2],
@@ -39,9 +38,7 @@ const gameBoardModule = (function () {
   const checkPlayerTurns = (playerArray) => {
     winningPositions.forEach((winningCombo) => {
       if (compareArrays(playerArray, winningCombo)) {
-        gameWin = true;
-        console.log(`Congratz ${currentPlayer.name} for winning`);
-        markWinningSquares(winningCombo);
+        showWinMessage(winningCombo);
       }
     });
   };
@@ -65,6 +62,17 @@ const gameBoardModule = (function () {
         squareToHiglight.classList.add("light-side");
       }
     });
+  };
+
+  const showWinMessage = (winningArray) => {
+    markWinningSquares(winningArray)
+    currentPlayer.playerSide == "X"
+      ? alert(
+          `Congratz - Dark Side with ${currentPlayer.name} Won! Do you want to restart game?`
+        )
+      : alert(
+          `Congratz - Light Side with ${currentPlayer.name} Won! Do you want to restart game?`
+        );
   };
 
   const populateBoard = (() => {
@@ -116,13 +124,15 @@ const Player = (name, side) => {
     // Create player card
     const playerCard = document.createElement("div");
     playerCard.className = "player-card";
-    side == "X" ? playerCard.classList.add("dark-side") : playerCard.classList.add("light-side")
+    side == "X"
+      ? playerCard.classList.add("dark-side")
+      : playerCard.classList.add("light-side");
     // Place player card inside player card wrapper
     cardHolder.appendChild(playerCard);
     // Create card details wrapper
-    const detailsWrapper = document.createElement("div")
-    detailsWrapper.className = "card-details"
-    playerCard.appendChild(detailsWrapper)
+    const detailsWrapper = document.createElement("div");
+    detailsWrapper.className = "card-details";
+    playerCard.appendChild(detailsWrapper);
     // Create card detail - name
     const cardName = document.createElement("h3");
     cardName.className = "card-name";
