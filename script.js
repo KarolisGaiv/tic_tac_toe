@@ -96,8 +96,6 @@ const gameBoardModule = (function () {
 })();
 
 const Player = (name, side) => {
-  const cardName = document.querySelector(".card-name");
-  const cardMarker = document.querySelector(".card-marker");
   let playerSide = side;
   let playerArray = [];
 
@@ -110,7 +108,51 @@ const Player = (name, side) => {
     playerArray.push(parseInt(field.id));
   };
 
-  return { name, setPlayerMarker, playerSide, playerArray };
+  const createPlayerCard = (name, side) => {
+    const darkSideIcon = "swg swg-darthvader-5 swg-4x";
+    const lightSideIcon = "swg swg-yoda-3 swg-4x";
+
+    const cardHolder = document.querySelector(".card-wrapper");
+    // Create player card
+    const playerCard = document.createElement("div");
+    playerCard.className = "player-card";
+    side == "X" ? playerCard.classList.add("dark-side") : playerCard.classList.add("light-side")
+    // Place player card inside player card wrapper
+    cardHolder.appendChild(playerCard);
+    // Create card details wrapper
+    const detailsWrapper = document.createElement("div")
+    detailsWrapper.className = "card-details"
+    playerCard.appendChild(detailsWrapper)
+    // Create card detail - name
+    const cardName = document.createElement("h3");
+    cardName.className = "card-name";
+    // Place player name inside card detail
+    cardName.innerText = name;
+    detailsWrapper.appendChild(cardName);
+    // Create card detail - player marker
+    const cardMarker = document.createElement("div");
+    cardMarker.className = "card-marker";
+    // Place player side inside card detail
+    if (side == "X") {
+      cardMarker.innerText = "Dark Side";
+      detailsWrapper.appendChild(cardMarker);
+    } else {
+      cardMarker.innerText = "Light Side";
+      detailsWrapper.appendChild(cardMarker);
+    }
+    // Create card icon
+    const cardIcon = document.createElement("span");
+    cardIcon.id = "player-icon";
+    if (side == "X") {
+      cardIcon.className = darkSideIcon;
+      playerCard.appendChild(cardIcon);
+    } else {
+      cardIcon.className = lightSideIcon;
+      playerCard.appendChild(cardIcon);
+    }
+  };
+
+  return { name, setPlayerMarker, playerSide, playerArray, createPlayerCard };
 };
 
 //Functions
@@ -131,9 +173,11 @@ const submitForm = () => {
     player1 = Player(playerName, playerMarker);
     document.getElementById(playerMarker).remove();
     getCurrentPlayer(player1);
+    player1.createPlayerCard(player1.name, player1.playerSide);
   } else {
     player2 = Player(playerName, playerMarker);
     getCurrentPlayer(player2);
+    player2.createPlayerCard(player2.name, player2.playerSide);
   }
 
   // Remove player creation form after both players are created

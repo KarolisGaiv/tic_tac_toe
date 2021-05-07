@@ -1,103 +1,116 @@
 body {
-    align-items: center;
-    background-color: #313135;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Poller One', cursive;
-    margin: auto;
+  align-items: center;
+  background-color: #313135;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poller One", cursive;
+  margin: auto;
 }
 
 .header {
-    background: #e3e4e8;
-    text-align: center;
-    width: 100%;
+  background: #e3e4e8;
+  text-align: center;
+  width: 100%;
 }
 
 .body-wrapper {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 50px;
-    width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  width: 100%;
 }
 
 .board {
-    border: 1px solid black;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    height: 300px;
-    width: 300px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 300px;
+  width: 300px;
 }
 
 .board-box {
-    align-items: center;
-    border: 1px solid black;
-    box-sizing: border-box;
-    display: flex;
-    font-size: 3rem;
-    justify-content: center;
-    height: 100px;
-    width: 100px;
+  align-items: center;
+  border: 1px solid black;
+  box-sizing: border-box;
+  display: flex;
+  font-size: 3rem;
+  justify-content: center;
+  height: 100px;
+  width: 100px;
 }
 
 .dark-side {
-    border: 3px solid red;
-    color: red;
+  background: #47474f;
+  border: 3px solid red;
+  color: red;
 }
 
 .light-side {
-    border: 3px solid whitesmoke;
-    color: whitesmoke;
+  background: #838aa8;
+  border: 3px solid whitesmoke;
+  color: whitesmoke;
 }
 
 .player-wrapper {
-    background: #e3e4e8;
-    border: 5px solid black;
-    border-radius: 5px;
-    max-width: 300px;
-    padding: 20px;
-    text-align: center;
+  background: #e3e4e8;
+  border: 5px solid black;
+  border-radius: 5px;
+  max-width: 300px;
+  padding: 20px;
+  text-align: center;
 }
 
 .player-form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-header {
-    border-bottom: 2px solid black;
-    font-size: 20px;
-    margin: 0 0 20px 0;
+  border-bottom: 2px solid black;
+  font-size: 20px;
+  margin: 0 0 20px 0;
 }
 
 .input-field,
 .player-marker {
-    cursor: pointer;
-    margin: 5px;
+  cursor: pointer;
+  margin: 5px;
 }
 
 .submit-btn {
-    align-self: center;
-    background: #313135;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #e3e4e8;
-    margin-top: 30px;
-    padding: 10px;
-    width: 120px;
+  align-self: center;
+  background: #313135;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #e3e4e8;
+  margin-top: 30px;
+  padding: 10px;
+  width: 120px;
 }
 
 .submit-btn:hover {
-    background: #5b5b68;
+  background: #5b5b68;
 }
 
 .card-wrapper {
-    margin: 20px;
+  margin: 20px;
 }
 
 .player-card {
-    border: 1px solid black;
-    border-radius: 5px;
-    width: 200px;
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  width: 250px;
+}
+
+.card-name {
+  margin: 0;
+}
+
+.card-marker {
+  margin-top: 15px;
 }
