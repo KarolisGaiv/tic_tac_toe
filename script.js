@@ -65,7 +65,7 @@ const gameBoardModule = (function () {
   };
 
   const showWinMessage = (winningArray) => {
-    markWinningSquares(winningArray)
+    markWinningSquares(winningArray);
     currentPlayer.playerSide == "X"
       ? alert(
           `Congratz - Dark Side with ${currentPlayer.name} Won! Do you want to restart game?`
@@ -106,9 +106,23 @@ const gameBoardModule = (function () {
 const Player = (name, side) => {
   let playerSide = side;
   let playerArray = [];
+  const darkSideIcon = "swg swg-darthvader-5 swg-4x";
+  const lightSideIcon = "swg swg-yoda-3 swg-4x";
+  const darkSideIconSmall = "swg swg-darthvader-5";
+  const lightSideIconSmall = "swg swg-yoda-3";
 
   function setPlayerMarker(square) {
-    square.innerText = playerSide;
+    const icon = document.createElement("span");
+    if (playerSide == "X") {
+      icon.className = darkSideIconSmall;
+      icon.style.color = "red";
+      square.appendChild(icon);
+    } else {
+      icon.className = lightSideIconSmall;
+      icon.style.color = "whitesmoke";
+      square.appendChild(icon);
+    }
+    // square.innerText = playerSide;
     saveTurn(square);
   }
 
@@ -117,9 +131,6 @@ const Player = (name, side) => {
   };
 
   const createPlayerCard = (name, side) => {
-    const darkSideIcon = "swg swg-darthvader-5 swg-4x";
-    const lightSideIcon = "swg swg-yoda-3 swg-4x";
-
     const cardHolder = document.querySelector(".card-wrapper");
     // Create player card
     const playerCard = document.createElement("div");
