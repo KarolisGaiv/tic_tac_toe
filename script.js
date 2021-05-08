@@ -18,6 +18,35 @@ const gameBoardModule = (function () {
     [2, 4, 6],
   ];
 
+  const populateBoard = (() => {
+    fields.forEach((field) => {
+      field.addEventListener("click", () => {
+        // Check if both players exist before setting player marker
+        if (!player1 || !player2) {
+          alert("You need two players to play this game :)");
+        }
+        // Check if square is not taken
+        if (isPopulated(field)) {
+          alert("Field is already taken, choose another one");
+          return;
+        }
+        currentPlayer.setPlayerMarker(field);
+        counter++;
+        // Start checking for winner only when one player has already made at least 2 moves
+        if (counter > 4) {
+          checkResult(counter, currentPlayer);
+        }
+        changePlayerTurn();
+      });
+    });
+  })();
+
+  function isPopulated(element) {
+    let status = false;
+    element.innerHTML ? (status = true) : (status = false);
+    return status;
+  }
+
   const changePlayerTurn = () => {
     if (currentPlayer == player1) {
       currentPlayer = player2;
@@ -66,39 +95,29 @@ const gameBoardModule = (function () {
 
   const showWinMessage = (winningArray) => {
     markWinningSquares(winningArray);
-    currentPlayer.playerSide == "X"
-      ? alert(
-          `Congratz - Dark Side with ${currentPlayer.name} Won! Do you want to restart game?`
-        )
-      : alert(
-          `Congratz - Light Side with ${currentPlayer.name} Won! Do you want to restart game?`
-        );
+    if (confirm(winMessage())) {
+      restartBoard();
+    } else {
+      return false;
+    }
   };
 
-  const populateBoard = (() => {
-    fields.forEach((field) => {
-      // const squareNumber = parseInt(field.id)
-      field.addEventListener("click", () => {
-        // Check if both players exist before setting player marker
-        if (player1 && player2 != null) {
-          // Check if square is not taken
-          if (field.innerText) {
-            alert("Field is already taken, choose another one");
-            return;
-          }
-          currentPlayer.setPlayerMarker(field);
-          counter++;
-          // Start checking for winner only when one player has already made at least 2 moves
-          if (counter > 4) {
-            checkResult(counter, currentPlayer);
-          }
-          changePlayerTurn();
-        } else {
-          alert("You need two players to play this game :)");
-        }
-      });
-    });
-  })();
+  const winMessage = () => {
+    let message;
+    if (currentPlayer.playerSide == "X") {
+      message = `Congratz - Dark Side with ${currentPlayer.name} Won! Do you want to restart game?`;
+    } else {
+      message = `Congratz - Light Side with ${currentPlayer.name} Won! Do you want to restart game?`;
+    }
+    return message;
+  };
+
+  const restartBoard = () => {
+    currentPlayer = player1;
+    player1.playerArray = [];
+    player2.playerArray = [];
+    counter = 0;
+  };
 
   return {};
 })();
