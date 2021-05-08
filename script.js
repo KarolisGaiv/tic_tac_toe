@@ -32,6 +32,7 @@ const gameBoardModule = (function () {
         }
         currentPlayer.setPlayerMarker(field);
         counter++;
+        console.log(counter);
         // Start checking for winner only when one player has already made at least 2 moves
         if (counter > 4) {
           checkResult(counter, currentPlayer);
@@ -129,7 +130,14 @@ const gameBoardModule = (function () {
     });
   }
 
-  return { clearFields };
+  function resetGame() {
+    clearFields()
+    player1 = undefined
+    player2 = undefined
+    counter = 0
+  }
+
+  return { clearFields, resetGame };
 })();
 
 const Player = (name, side) => {
@@ -151,7 +159,6 @@ const Player = (name, side) => {
       icon.style.color = "whitesmoke";
       square.appendChild(icon);
     }
-    // square.innerText = playerSide;
     saveTurn(square);
   }
 
@@ -218,10 +225,10 @@ const submitForm = () => {
   }
 
   // Check if player is created first time and remove marker option after it was taken
-  if (player1 == null) {
+  if (player1 === undefined) {
     player1 = Player(playerName, playerMarker);
-    document.getElementById(playerMarker).remove();
-    playerName.innerHTML = "";
+    // document.getElementById(playerMarker).remove();
+    document.getElementById(playerMarker).setAttribute("disabled", true);
     getCurrentPlayer(player1);
     player1.createPlayerCard(player1.name, player1.playerSide);
   } else {
@@ -232,7 +239,7 @@ const submitForm = () => {
   toogleForm();
   form.reset();
 };
-
+ 
 const getCurrentPlayer = (player) => {
   if (player.playerSide == "X") {
     currentPlayer = player;
@@ -255,18 +262,13 @@ function deleteCards() {
   });
 }
 
-function reset() {
-  const formWrapper = document.querySelector(".player-wrapper");
-  const form = document.querySelector(".player-form");
-  // formWrapper.style.display = "block";
+// function reset() {
+//   // player1 = undefined
+//   // player2 = undefined
+//   // currentPlayer = undefined
 
-  player1 = undefined
-  player2 = undefined
-  currentPlayer = undefined
-
-
-  toogleForm()
-  gameBoardModule.clearFields();
-  deleteCards();
-  form.reset();
-}
+//   gameBoardModule.resetGame()
+//   toogleForm()
+//   // gameBoardModule.clearFields();
+//   deleteCards();
+// }
