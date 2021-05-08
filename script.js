@@ -114,8 +114,8 @@ const gameBoardModule = (function () {
   };
 
   const restartBoard = () => {
-    player1.playerArray = [];
-    player2.playerArray = [];
+    player1.playerArray.length = 0;
+    player2.playerArray.length = 0;
     counter = 0;
     clearFields()
   };
