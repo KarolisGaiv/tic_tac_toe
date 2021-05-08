@@ -32,7 +32,6 @@ const gameBoardModule = (function () {
         }
         currentPlayer.setPlayerMarker(field);
         counter++;
-        console.log(counter);
         // Start checking for winner only when one player has already made at least 2 moves
         if (counter > 4) {
           checkResult(counter, currentPlayer);
@@ -96,11 +95,14 @@ const gameBoardModule = (function () {
 
   const showWinMessage = (winningArray) => {
     markWinningSquares(winningArray);
-    if (confirm(winMessage())) {
-      restartBoard();
-    } else {
-      return false;
-    }
+
+    setTimeout(function() {
+      if (confirm(winMessage())) {
+        restartBoard();
+      } else {
+        return false;
+      }
+    }, 0)
   };
 
   const winMessage = () => {
@@ -117,17 +119,17 @@ const gameBoardModule = (function () {
     player1.playerArray.length = 0;
     player2.playerArray.length = 0;
     counter = 0;
-    clearFields()
+    clearFields();
   };
 
   function clearFields() {
     fields.forEach((field) => {
-      field.innerHTML = ""
-      field.className = "board-box"
-    })
+      field.innerHTML = "";
+      field.className = "board-box";
+    });
   }
 
-  return {};
+  return { clearFields };
 })();
 
 const Player = (name, side) => {
@@ -209,7 +211,6 @@ const submitForm = () => {
   const playerName = document.getElementById("player-name").value;
   const playerMarker = document.querySelector(".player-marker").value;
   const form = document.querySelector(".player-form");
-  const submitBtn = document.querySelector(".submit-btn");
 
   if (!playerName) {
     alert("Please enter player name");
@@ -220,6 +221,7 @@ const submitForm = () => {
   if (player1 == null) {
     player1 = Player(playerName, playerMarker);
     document.getElementById(playerMarker).remove();
+    playerName.innerHTML = "";
     getCurrentPlayer(player1);
     player1.createPlayerCard(player1.name, player1.playerSide);
   } else {
@@ -227,12 +229,7 @@ const submitForm = () => {
     getCurrentPlayer(player2);
     player2.createPlayerCard(player2.name, player2.playerSide);
   }
-
-  // Remove player creation form after both players are created
-  if (player1 && player2 != null) {
-    document.querySelector(".player-wrapper").remove();
-  }
-
+  toogleForm();
   form.reset();
 };
 
@@ -241,3 +238,35 @@ const getCurrentPlayer = (player) => {
     currentPlayer = player;
   }
 };
+
+function toogleForm() {
+  const playerForm = document.querySelector(".player-wrapper");
+  if (player1 && player2) {
+    playerForm.style.display = "none";
+  } else {
+    playerForm.style.display = "block";
+  }
+}
+
+function deleteCards() {
+  const playerCard = document.querySelectorAll(".player-card");
+  playerCard.forEach((card) => {
+    card.remove();
+  });
+}
+
+function reset() {
+  const formWrapper = document.querySelector(".player-wrapper");
+  const form = document.querySelector(".player-form");
+  // formWrapper.style.display = "block";
+
+  player1 = undefined
+  player2 = undefined
+  currentPlayer = undefined
+
+
+  toogleForm()
+  gameBoardModule.clearFields();
+  deleteCards();
+  form.reset();
+}
