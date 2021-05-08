@@ -32,6 +32,7 @@ const gameBoardModule = (function () {
         }
         currentPlayer.setPlayerMarker(field);
         counter++;
+        console.log(counter);
         // Start checking for winner only when one player has already made at least 2 moves
         if (counter > 4) {
           checkResult(counter, currentPlayer);
@@ -113,11 +114,18 @@ const gameBoardModule = (function () {
   };
 
   const restartBoard = () => {
-    currentPlayer = player1;
     player1.playerArray = [];
     player2.playerArray = [];
     counter = 0;
+    clearFields()
   };
+
+  function clearFields() {
+    fields.forEach((field) => {
+      field.innerHTML = ""
+      field.className = "board-box"
+    })
+  }
 
   return {};
 })();
