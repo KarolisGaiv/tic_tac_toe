@@ -6,6 +6,7 @@ let currentPlayer;
 const gameBoardModule = (function () {
   const fields = document.querySelectorAll(".board-box");
   let counter = 0;
+  let gameWon = false;
 
   const winningPositions = [
     [0, 1, 2],
@@ -32,12 +33,13 @@ const gameBoardModule = (function () {
         }
         currentPlayer.setPlayerMarker(field);
         counter++;
-        console.log(counter);
         // Start checking for winner only when one player has already made at least 2 moves
         if (counter > 4) {
           checkResult(counter, currentPlayer);
         }
-        changePlayerTurn();
+        if (!gameWon) {
+          changePlayerTurn();
+        }
       });
     });
   })();
@@ -57,18 +59,21 @@ const gameBoardModule = (function () {
   };
 
   const checkResult = (turnCount, currentPlayer) => {
-    if (turnCount > 8) {
-      alert("It's a TIE!");
-      return;
-    }
-
     checkPlayerTurns(currentPlayer.playerArray);
+
+    if (!gameWon) {
+      if (turnCount > 8) {
+        alert("It's a TIE!");
+        return;
+      }
+    }
   };
 
   const checkPlayerTurns = (playerArray) => {
     winningPositions.forEach((winningCombo) => {
       if (compareArrays(playerArray, winningCombo)) {
         showWinMessage(winningCombo);
+        gameWon = true;
       }
     });
   };
@@ -97,13 +102,13 @@ const gameBoardModule = (function () {
   const showWinMessage = (winningArray) => {
     markWinningSquares(winningArray);
 
-    setTimeout(function() {
+    setTimeout(function () {
       if (confirm(winMessage())) {
         restartBoard();
       } else {
         return false;
       }
-    }, 0)
+    }, 0);
   };
 
   const winMessage = () => {
@@ -119,7 +124,6 @@ const gameBoardModule = (function () {
   const restartBoard = () => {
     player1.playerArray.length = 0;
     player2.playerArray.length = 0;
-    counter = 0;
     clearFields();
   };
 
@@ -128,16 +132,11 @@ const gameBoardModule = (function () {
       field.innerHTML = "";
       field.className = "board-box";
     });
+    counter = 0;
+    gameWon = false;
   }
 
-  function resetGame() {
-    clearFields()
-    player1 = undefined
-    player2 = undefined
-    counter = 0
-  }
-
-  return { clearFields, resetGame };
+  return { clearFields };
 })();
 
 const Player = (name, side) => {
@@ -159,6 +158,7 @@ const Player = (name, side) => {
       icon.style.color = "whitesmoke";
       square.appendChild(icon);
     }
+    // square.innerText = playerSide;
     saveTurn(square);
   }
 
@@ -225,10 +225,10 @@ const submitForm = () => {
   }
 
   // Check if player is created first time and remove marker option after it was taken
-  if (player1 === undefined) {
+  if (player1 == null) {
     player1 = Player(playerName, playerMarker);
     // document.getElementById(playerMarker).remove();
-    document.getElementById(playerMarker).setAttribute("disabled", true);
+    playerName.innerHTML = "";
     getCurrentPlayer(player1);
     player1.createPlayerCard(player1.name, player1.playerSide);
   } else {
@@ -239,7 +239,7 @@ const submitForm = () => {
   toogleForm();
   form.reset();
 };
- 
+
 const getCurrentPlayer = (player) => {
   if (player.playerSide == "X") {
     currentPlayer = player;
@@ -262,13 +262,12 @@ function deleteCards() {
   });
 }
 
-// function reset() {
-//   // player1 = undefined
-//   // player2 = undefined
-//   // currentPlayer = undefined
+function reset() {
+  player1 = undefined;
+  player2 = undefined;
+  currentPlayer = undefined;
 
-//   gameBoardModule.resetGame()
-//   toogleForm()
-//   // gameBoardModule.clearFields();
-//   deleteCards();
-// }
+  toogleForm();
+  gameBoardModule.clearFields();
+  deleteCards();
+}
