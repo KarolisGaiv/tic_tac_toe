@@ -227,12 +227,13 @@ const submitForm = () => {
   // Check if player is created first time and remove marker option after it was taken
   if (player1 == null) {
     player1 = Player(playerName, playerMarker);
-    // document.getElementById(playerMarker).remove();
+    document.getElementById(playerMarker).disabled = true;
     playerName.innerHTML = "";
     getCurrentPlayer(player1);
     player1.createPlayerCard(player1.name, player1.playerSide);
   } else {
     player2 = Player(playerName, playerMarker);
+    document.getElementById(playerMarker).disabled = true;
     getCurrentPlayer(player2);
     player2.createPlayerCard(player2.name, player2.playerSide);
   }
@@ -248,11 +249,21 @@ const getCurrentPlayer = (player) => {
 
 function toogleForm() {
   const playerForm = document.querySelector(".player-wrapper");
+  const sideOption = document.querySelector(".side-option");
   if (player1 && player2) {
     playerForm.style.display = "none";
   } else {
     playerForm.style.display = "block";
   }
+}
+
+function resetFormOptions() {
+  const sideOptions = document.querySelectorAll(".side-option");
+
+  sideOptions.forEach((option) => {
+    option.disabled = false;
+  });
+  document.querySelector(".player-form").reset();
 }
 
 function deleteCards() {
@@ -268,6 +279,7 @@ function reset() {
   currentPlayer = undefined;
 
   toogleForm();
+  resetFormOptions();
   gameBoardModule.clearFields();
   deleteCards();
 }
